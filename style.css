@@ -1,0 +1,8 @@
+body {
+    font-family: 'Fira Sans', sans-serif;
+}
+
+#search-city {
+    background-color: #676464; /* Gray color */
+    color: white; /* Text color */
+}
