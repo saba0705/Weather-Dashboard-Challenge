@@ -7,9 +7,9 @@
     <title>Weather Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400&family=Merriweather:wght@700&display=swap"
         rel="stylesheet" />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/styles/style.css" />
 </head>
 
 <body class="min-vh-100 d-flex flex-column bg-light">
@@ -27,25 +27,22 @@
                             <!-- search input label -->
                             <div class="row m-0">
                             </div>
-                            <select id="city-select" class="form-control mb-2">
-                                <option value="" selected disabled>Select a City</option>
-                                <option value="Denver">Denver</option>
-                                <option value="New York">New York</option>
-                                <option value="San Francisco">San Francisco</option>
-                                <option value="Seattle">Seattle</option>
-                                <option value="Chicago">Chicago</option>
-                                <option value="Orlando">Orlando</option>
-                                <option value="Austin">Austin</option>
-                            </select>
+                            <input id="city-select" class="form-control mb-2">
+
+
                             <button id="search-button" class="btn btn-primary w-100">Search</button>
                         </form>
-                        <input type="text" id="selected-city" class="form-control mb-2" disabled>
+
                         <!-- Input field to display selected city -->
 
                         <!-- search history -->
-                        <div id="search-history-container" class="row m-0 search-history-container">
+                        <div id="search-history-container">
+                            <h3>Search History</h3>
+                            <div class="d-flex flex-column" id="search-history-list"></div>
                         </div>
                     </div>
+                </div>
+                <div class=" col-lg-9">
                     <!-- Current Weather Card -->
                     <div class="card mb-4">
                         <h3 class="card-header">Current Weather</h3>
@@ -53,20 +50,21 @@
                             <!-- Content for current weather -->
                         </div>
                     </div>
-                </div>
 
 
 
-                <!-- 5-Day Forecast Card -->
-                <div class="5 day forecast">
+
+                    <!-- 5-Day Forecast Card -->
+                    <div class="5 day forecast">
 
 
-                    <!-- 5 day forecast title-->
-                    <h2 class="forecast-title" id="forecast-title"></h2>
-                    <div id="forecasts-cards-container"
-                        class="forecasts-cards-container d-flex justify-content-between">
-                        <!-- 5 day forecast card -->
+                        <!-- 5 day forecast title-->
+                        <h2 class="forecast-title" id="forecast-title"></h2>
+                        <div id="forecasts-cards-container"
+                            class="forecasts-cards-container d-flex justify-content-between">
+                            <!-- 5 day forecast card -->
 
+                        </div>
                     </div>
                 </div>
             </div>
@@ -75,8 +73,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/dayjs.min.js"
         integrity="sha512-0fcCRl828lBlrSCa8QJY51mtNqTcHxabaXVLPgw/jPA5Nutujh6CbTdDgRzl9aSPYW/uuE7c4SffFUQFBAy6lg=="
         crossorigin="anonymous"></script>
-    <script src="display-search.js"></script>
-    <script src="script.js"></script>
+    <script src="./assets/js/display-search.js"></script>
+    <script src="./assets/js/script.js"></script>
 
 
 </body>

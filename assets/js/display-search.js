@@ -6,27 +6,47 @@ let searchbuttonEl = document.querySelector('#search-button');
 let citySelectEl = document.querySelector('#city-select');
 let cityInputEl = document.querySelector('#city-input');
 let userInputEl = document.querySelector('#user-input');
+let searchHistoryListEl = document.querySelector('#search-history-list');
 let storedUserInputs = JSON.parse(localStorage.getItem("storedUserInputs")) || [];
+const forecastContainer = document.querySelector ("#forecasts-cards-container");
 
 // make list of previously searched cities
-var searchHistoryList = function (cityName) {
-    $('.past-search:contains("' + cityName + '")').remove();
+function displaySearchHistory() {
+    searchHistoryListEl.innerHTML = "";
+    storedUserInputs.forEach(city => {
+        let listItem = document.createElement('button');
+        listItem.textContent = city;
+        listItem.classList.add('past-search',"btn","btn-primary");
+        listItem.addEventListener('click', function () {
+            getApi(city);
+        });
+        searchHistoryListEl.appendChild(listItem);
+    });
 }
 
 // Event listener for the search button click
 searchbuttonEl.addEventListener("click", function (e) {
     e.preventDefault();
     let citySelect = document.getElementById("city-select");
-    let selectedCity = citySelect.options[citySelect.selectedIndex].text;
-    document.getElementById("selected-city").value = selectedCity;
+    let selectedCity = citySelect.value
+    if (!selectedCity) return
+    // document.getElementById("selected-city").value = selectedCity;
     getApi(selectedCity);
+    citySelect.value =""
 });
 
-//Add the new search to the array of stored user inputs
-storedUserInputs.push(userInputEl);
+
+
 
 //update local storage with the new array of stored user inputs
-localStorage.setItem("storedUserInputs", JSON.stringify(storedUserInputs));
+
+function saveCity(city){
+    if (storedUserInputs.includes(city))
+        return
+    storedUserInputs.push(city);
+    localStorage.setItem("storedUserInputs", JSON.stringify(storedUserInputs));
+    displaySearchHistory() 
+}
 
 
 
@@ -37,7 +57,9 @@ function getApi(userInput) {
     fetch(requestURL)
         .then(response => response.json())
         .then(data => {
+            
             const { lat, lon } = data.coord;
+            saveCity(data.name)
             fiveDayForecast(lat, lon);
             updateWeatherUI(data);
         })
@@ -71,11 +93,11 @@ function kelvinToFahrenheit(kelvin) {
 }
 
 // Form submission event listener
-searchcityFormEl.addEventListener('submit', function (event) {
-    event.preventDefault();
-    let userInput = searchInputEl.value;
-    getApi(userInput);
-});
+//  searchcityFormEl.addEventListener('submit', function (event) {
+//     event.preventDefault();
+//     let userInput = searchInputEl.value;
+//     getApi(userInput);
+
 
 let fiveDayForecast = function (lat,lon) {
     const apiUrlForecast = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=10624d5e6634858d31e4d2904ece6461 `;
@@ -98,7 +120,7 @@ let fiveDayForecast = function (lat,lon) {
             // add 5 day forecast title
             let futureForecastTitle = $("#future-forecast-title");
             futureForecastTitle.text("5-Day Forecast:")
-
+           forecastContainer.innerHTML=""
             // using data from response, set up each day of 5 day forecast
             for (var i = 3; i < response.list.length; i+=8) {
                 var iconUrl = `https://openweathermap.org/img/w/${response.list[i].weather[0].icon}.png`;
@@ -124,6 +146,7 @@ let fiveDayForecast = function (lat,lon) {
 
         })
 }
+displaySearchHistory() 
 
 
 
